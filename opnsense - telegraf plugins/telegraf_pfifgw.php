@@ -161,7 +161,8 @@ function get_interfaces_info($include_unlinked = false)
         if (file_exists("/var/run/{$link_type}_{$ifdescr}.pid")) {
             $sec = intval(shell_safe('/usr/local/opnsense/scripts/interfaces/ppp-uptime.sh %s', $ifinfo['if']));
             if ($sec) {
-                $ifinfo['ppp_uptime'] = convert_seconds_to_hms($sec);
+                $t = round($sec);
+                $ifinfo['ppp_uptime'] = sprintf('%02d:%02d:%02d', $t/3600, floor($t/60)%60, $t%60);
             }
         }
 
