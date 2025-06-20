@@ -52,7 +52,8 @@ Enable CPU, Total CPU, Memory, System, Network and PF Inputs. (Others can be add
 ![Screenshot enabling inputs](/images/opnsense2.png)\
 Click Save
 
-
+\
+\
 Depending on the version of Influx installed choose either 3a or 3b
 ## 3a. Configure Telegraph to send to Influxdb v1
 Navigate to Services -> Telegraf -> Output\
@@ -73,6 +74,9 @@ Influx v2 Organization: Your InfluxDB Organization\
 Influx v2 Bucket: Your InfluxDB Bucket\
 ![Screenshot for Influx v2 config](/images/opnsense3.png)\
 Click Save
+
+## 4. Install the Custom Plugins
+
 
 
 ```
