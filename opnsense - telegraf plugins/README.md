@@ -32,18 +32,47 @@ Collects emperature sensor information.
 
 # Installing
 These instructions are based on a clean install of OPNsense 25.1.8.
-
-## Preperation
-> [!TIP]
+> [!NOTE]
 > If you previously used the pkg install version of telegraf\
 > Run `sudo pkg remove telegraf` to remove telegraf.\
 > Delete the line that starts with telegraf in /usr/local/etc/sudoers.
 
-## 1. Install and configure the standard OPNsense Telegraf plugin
-navigate to System -> Firmware -> Plugins -> Search for telegraf, and click the plus icon to install.
+## Preperation
+> [!NOTE]
+> Ansible can be used to automate some of the install and configuration but I have not tested it.  Further details can be found in the /ansible subfolder
+
+## 1. Install OPNsense Telegraf plugin
+Navigate to System -> Firmware -> Plugins -> Search for telegraf\
+![Screenshot adding the default Telegraf plugin](/images/opnsense1.png)\
+Click the plus icon to install
+
+## 2. Configure the standard Telegraf inputs
+Navigate to Services -> Telegraf -> Input\
+Enable Network and PF Inputs.\
+![Screenshot enabling inputs](/images/opnsense2.png)\
+Click Save
 
 
+Depending on the version of Influx installed choose either 3a or 3b
+## 3a. Configure Telegraph to send to Influxdb v1
+Navigate to Services -> Telegraf -> Output\
+Enable Influx Output and fill in the following:\
+Influx URL: Your InfluxDB URL, this will be the IP address or hostname of your system that is running InfluxDB. E.g http://192.168.1.10:8086\
+Database: The name of the database in Infuxdb you want to use. E.g. opnsense\
+Username: The username in Influxdb that Telegraf will connect with\
+Password: The password for the username in Influxdb that Telegraf will connect with\
+![Screenshot for Influx v2 config](/images/opnsense4.png)\
+Click Save
 
+## 3b. Configure Telegraph to send to Influxdb v2
+Navigate to Services -> Telegraf -> Output\
+Enable Influx v2 Output and fill in the following:\
+Influx v2 Token: Your InfluxDB Token\
+Influx v2 URL: Your InfluxDB URL, this will be the IP address or hostname of your system that is running InfluxDB. E.g http://192.168.1.10:8086\
+Influx v2 Organization: Your InfluxDB Organization\
+Influx v2 Bucket: Your InfluxDB Bucket\
+![Screenshot for Influx v2 config](/images/opnsense3.png)\
+Click Save
 
 
 ```
