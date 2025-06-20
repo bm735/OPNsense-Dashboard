@@ -76,9 +76,38 @@ Influx v2 Bucket: Your InfluxDB Bucket\
 Click Save
 
 ## 4. Install the Custom Plugins
+Use putty or similar to ssh to opnsense and connect with the root or eqivalent user\
+
+ * Create and permission folders
+ * Add the php script to the sudoers file
+ * Add to the sudoers file to block the php script logging every 10 seconds
+ * Download the custom config and scripts
+ * Apply permissions to the scripts
 
 
+Run the following commands from the command line
+```
+mkdir /usr/local/etc
+mkdir /usr/local/etc/telegraf.d
+chmod 750 /usr/local/etc/telegraf.d
 
+printf 'telegraf ALL=(root) NOPASSWD: /usr/local/bin/telegraf_pfifgw.php\n' | sudo tee -a /usr/local/etc/sudoers > /dev/null
+
+printf 'Cmnd_Alias PFIFGW = /usr/local/bin/telegraf_pfifgw.php\n' | sudo tee -a /usr/local/etc/sudoers > /dev/null
+printf 'Defaults!PFIFGW !log_allowed\n' | sudo tee -a /usr/local/etc/sudoers > /dev/null
+
+
+curl "https://raw.githubusercontent.com/bm735/OPNsense-Dashboard/refs/heads/master/opnsense%20-%20telegraf%20plugins/custom.conf" -o /usr/local/etc/telegraf.d/custom.conf
+curl "https://raw.githubusercontent.com/bm735/OPNsense-Dashboard/refs/heads/master/opnsense%20-%20telegraf%20plugins/telegraf_pfifgw.php" -o /usr/local/bin/telegraf_pfifgw.php
+curl "https://raw.githubusercontent.com/bm735/OPNsense-Dashboard/refs/heads/master/opnsense%20-%20telegraf%20plugins/telegraf_temperature.sh" -o /usr/local/bin/telegraf_temperature.sh
+chmod 755 /usr/local/bin/telegraf_temperature.sh /usr/local/bin/telegraf_pfifgw.php
 ```
 
-```
+> [!TIP]
+> To test if the Temperature plugin will work\
+> Run `sysctl dev.cpu` from the command line\
+> If you receive an error similar to `sysctl: cannot stat /proc/sys/dev/cpu: No such file or directory` then it is not supported.
+> Edit `/usr/local/etc/telegraf.d/custom.conf` and remove the line `"sh /usr/local/bin/telegraf_temperature.sh"`
+
+
+
