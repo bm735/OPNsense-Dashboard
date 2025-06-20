@@ -48,7 +48,7 @@ Click the plus icon to install
 
 ## 2. Configure the standard Telegraf inputs
 Navigate to Services -> Telegraf -> Input\
-Enable Network and PF Inputs.\
+Enable CPU, Total CPU, Memory, System, Network and PF Inputs. (Others can be added if you want to configure other dashboards)\
 ![Screenshot enabling inputs](/images/opnsense2.png)\
 Click Save
 
